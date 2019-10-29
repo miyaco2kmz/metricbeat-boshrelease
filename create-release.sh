@@ -3,7 +3,7 @@
 THIS_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 function latest_version {
-    if ls "$THIS_SCRIPT_DIR/"releases/metricbeat/metricbeat-*.yml; then
+    if ls "$THIS_SCRIPT_DIR/"releases/metricbeat/metricbeat-*.yml >/dev/null 2>&1; then
         grep -r '^version: ' "$THIS_SCRIPT_DIR/"releases/metricbeat/metricbeat-*.yml | awk -F': ' '{print $NF}' | tail -n 1 
         return 0
     fi
