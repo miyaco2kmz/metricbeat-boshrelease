@@ -28,7 +28,7 @@ setup.template.settings:
 
 #================================ General =====================================
 <%
-shipper_name = "#{spec.deployment}/#{spec.name}/#{spec.index}"
+shipper_name = "#{spec.deployment}::#{spec.name}::#{spec.index}"
 if_p('metricbeat.name') do |name|
   shipper_name = name
 end
