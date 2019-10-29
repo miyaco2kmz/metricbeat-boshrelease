@@ -1,0 +1,6 @@
+
+check process metricbeat
+  with pidfile /var/vcap/sys/run/metricbeat/metricbeat.pid
+  start program "/var/vcap/jobs/metricbeat/bin/ctl start"
+  stop program "/var/vcap/jobs/metricbeat/bin/ctl stop"
+  group vcap

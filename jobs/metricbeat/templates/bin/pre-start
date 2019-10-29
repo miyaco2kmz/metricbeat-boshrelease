@@ -1,0 +1,27 @@
+#!/bin/bash
+RUN_DIR=/var/vcap/sys/run/metricbeat
+LOG_DIR=/var/vcap/sys/log/metricbeat
+STORE_DIR=/var/vcap/store/metricbeat
+JOB_DIR=/var/vcap/jobs/metricbeat
+TMP_DIR=/var/vcap/sys/tmp/metricbeat
+CONFIG_DIR="$JOB_DIR/config"
+CONFIG_FILE="$CONFIG_DIR/metricbeat.yml"
+
+function run_metricbeat {
+    /var/vcap/packages/metricbeat/metricbeat --path.config $CONFIG_DIR --path.data $STORE_DIR --path.logs $LOG_DIR -c "$CONFIG_FILE" $@
+}
+
+function enable_modules {
+    run_metricbeat modules enable <%= p('metricbeat.modules.enabled').join(' ') %>
+} 
+
+function setup_dashboards {
+    run_metricbeat setup --dashboards
+}
+
+function main {
+    enable_modules
+    setup_dashboards
+}
+
+main

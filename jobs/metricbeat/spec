@@ -1,0 +1,62 @@
+---
+name: metricbeat
+
+templates:
+  bin/ctl: bin/ctl
+  bin/pre-start: bin/pre-start
+  bin/ctl_utils.sh: bin/ctl_utils.sh
+  config/metricbeat.yml: config/metricbeat.yml
+  config/modules.d/kafka.yml.disabled: config/modules.d/kafka.yml.disabled
+  config/modules.d/zookeeper.yml.disabled: config/modules.d/zookeeper.yml.disabled
+  config/modules.d/system.yml: config/modules.d/system.yml
+
+packages: 
+- metricbeat
+
+consumes:
+- name: elasticsearch
+  type: elasticsearch
+  optional: true
+- name: kibana
+  type: kibana
+  optional: true
+- name: kafka
+  type: kafka
+  optional: true
+- name: zookeeper
+  type: zookeeper
+  optional: true
+
+properties:
+  metricbeat.name:
+    description: "Name to display in Infrastructure App in Kibana"
+  metricbeat.elasticsearch.hosts:
+    description: "Elastic Search master nodes host/ip to connect with"
+    default: []
+  metricbeat.elasticsearch.port:
+    description: "Elastic Search master nodes port"
+    default: 9200
+  metricbeat.elasticsearch.protocol:
+    description: "Elastic Search master nodes protocol (http or https)"
+    default: http
+  metricbeat.kibana.host:
+    description: "Kibana node ip/host for setup dashboards"
+  metricbeat.kibana.port:
+    description: "Kibana node port"
+    default: 5601
+  metricbeat.kibana.protocol:
+    description: "Kibana node protocol (http or https)"
+    default: http
+  metricbeat.modules.enabled:
+    description: "List of modules you want to enable"
+    default: []
+  metricbeat.modules.kafka.hosts:
+    description: "List of kafka brokers hosts"
+  metricbeat.modules.kafka.port:
+    description: "Kafka port"
+    default: 9092
+  metricbeat.modules.zookeeper.hosts:
+    description: "List of modules that you want to run"
+  metricbeat.modules.zookeeper.port:
+    description: "List of modules that you want to run"
+    default: 2181

@@ -1,0 +1,7 @@
+---
+name: metricbeat
+
+dependencies: []
+
+files:
+- metricbeat/metricbeat-7.4.1.tar.gz 

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+RUN_DIR=/var/vcap/sys/run/metricbeat
+LOG_DIR=/var/vcap/sys/log/metricbeat
+STORE_DIR=/var/vcap/store/metricbeat
+JOB_DIR=/var/vcap/jobs/metricbeat
+TMP_DIR=/var/vcap/sys/tmp/metricbeat
+
+PIDFILE=$RUN_DIR/metricbeat.pid
+
+source $JOB_DIR/bin/ctl_utils.sh
+
+case $1 in
+
+  start)
+    mkdir -p $RUN_DIR $LOG_DIR $STORE_DIR $TMP_DIR
+
+    pid_guard $PIDFILE metricbeat
+
+    export CONFIG_PATH=$JOB_DIR/config/metricbeat.yml
+
+    echo "Starting metricbeat..." >>$LOG_DIR/metricbeat.stdout.log
+    echo $$ > $PIDFILE
+
+    exec /var/vcap/packages/metricbeat/metricbeat -c "$CONFIG_PATH" -e \
+      >>$LOG_DIR/metricbeat.stdout.log 2>>$LOG_DIR/metricbeat.stderr.log
+    ;;
+
+  stop)
+    echo "Stopping metricbeat..." >>$LOG_DIR/metricbeat.stdout.log
+    kill_and_wait $PIDFILE
+    ;;
+
+  *)
+  echo "Usage: ctl {start|stop}" ;;
+esac
+exit 0
