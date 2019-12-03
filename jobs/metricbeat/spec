@@ -17,6 +17,9 @@ consumes:
 - name: elasticsearch
   type: elasticsearch
   optional: true
+- name: logstash
+  type: logstash
+  optional: true
 - name: kibana
   type: kibana
   optional: true
@@ -33,6 +36,13 @@ properties:
   metricbeat.elasticsearch.hosts:
     description: "Elastic Search master nodes host/ip to connect with"
     default: []
+  metricbeat.elasticsearch.enable:
+    description: "Elastic Search Output Enable"
+  metricbeat.logstash.hosts:
+    description: "Logstash hosts"
+  metricbeat.logstash.port:
+    description: "Logstash port"
+    default: 5044
   metricbeat.elasticsearch.port:
     description: "Elastic Search master nodes port"
     default: 9200
